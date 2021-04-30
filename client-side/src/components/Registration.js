@@ -1,8 +1,13 @@
 import {NavLink} from 'react-router-dom';
 import React from 'react'
 import {useState} from 'react'
+import '/Users/summerjohnson/Desktop/nutrify-me/client-side/src/App.css'
+import {useHistory} from "react-router-dom"
+
 
 function Register() {
+    let history = useHistory()
+    
     const [userRegister, setUserRegister] = useState({})
 
     const handleOnAdd = (e) =>{
@@ -12,7 +17,8 @@ function Register() {
         })
     }
     const handleUserRegister = () => {
-        fetch('http://localhost:8080/login', {
+        
+        fetch('http://localhost:8080/register', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
@@ -22,9 +28,10 @@ function Register() {
         }).then(result => result.json())
         .then(result => {
             if(result.success) {
-                alert("User successfully added!")
-                //this takes the user to the books page to view all books
-                this.props.history.push('/')
+                alert("Successfully added!")
+                history.push("/")
+            }else {
+                alert("error")
             }
         })
     }
@@ -32,6 +39,9 @@ function Register() {
 
     return(
         <div id="registerPage">
+            <h1 id='title'>nutrifyMe</h1>
+           
+           
            
             <div id='loginBox'>
             

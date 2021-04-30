@@ -13,7 +13,7 @@ import 'font-awesome/css/font-awesome.min.css'
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
-        <BaseLayout>
+      <BaseLayout>
           <Switch>
                 <Route exact path ='/' component= {App} />
                 <Route exact path ='/Register' component= {Register} />

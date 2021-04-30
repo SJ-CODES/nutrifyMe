@@ -1,7 +1,15 @@
+import React from 'react'
+
+
+
+
+
 function Profile() {
     return(
-        <div>
-            <h1 id="profilePage">Profile</h1>
+        <div id="profilePage">
+            <div>
+                <h1 id="profilePage">Profile</h1>
+            </div>
         </div>
     )
 }
