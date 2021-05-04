@@ -3,17 +3,13 @@ import React from 'react'
 import{useState} from 'react'
 import '/Users/summerjohnson/Desktop/nutrify-me/client-side/src/App.css'
 import {useHistory} from "react-router-dom"
+import { withRouter } from 'react-router-dom'
 
 
-
-function LoginOptions() {
-    
-    let history = useHistory()
-   /*this.state = {
-         isloggedin: false
-    }*/
-    
-    const [userLogin, setUserLogin] = useState()
+function Login(props) {
+    //let history = useHistory
+  
+    const [userLogin, setUserLogin] = useState({})
     const [isloggedin, setIsloggedin] = useState(false)
 
     const handleOnAdd = (e) =>{
@@ -22,24 +18,40 @@ function LoginOptions() {
             [e.target.name]: e.target.value
         })
     }
+
     
 
-    const handleUserLogin = () =>{
-
-        fetch('http://localhost:8080/login').then(response =>{
-            return response.json()
-        }).then()
+    const handleUserLogin = () => {
+        let data = {
+            username: userLogin.username,
+            password: userLogin.password
+            
+        }
+        fetch('http://localhost:8080/users/login',{
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+            }).then(result => result.json())
+            .then(result => {
+                if(result.success) {
+                    console.log(result)
+                    localStorage.setItem("userid", result.user_id)
+                    alert("Welcome back to nutrifyMe")
+                   props.history.push("/Profile")
+                }else {
+                    alert("No user found")
+                  props.history.push("/Regsiter")
+                }
+        
+        })
 
     }
 
     const handleUserGuests = () => {
-        history.push("/Home")
+       props.history.push("/Home")
     }
-
-
-
-
-
 
     return (
         <div id='loginPage' >
@@ -55,7 +67,7 @@ function LoginOptions() {
                     <i class="fas fa-lock" ></i>
                     <input  type="password" onChange={handleOnAdd} placeholder="password" name='password'required/>
                 </div>
-                <button class="btn" onChange={handleUserLogin}>Login</button>
+                <button class="btn" onClick={handleUserLogin}>Login</button>
                 <a href="/register"><button class="btn"> Register</button></a> 
                 <a href="/Home"><button class="btn" onClick={handleUserGuests}>Login as Guest </button></a> 
                   
@@ -65,4 +77,4 @@ function LoginOptions() {
     )
 }
 
-export default LoginOptions
+export default withRouter(Login) 
