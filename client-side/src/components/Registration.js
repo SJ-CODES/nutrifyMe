@@ -5,8 +5,9 @@ import '/Users/summerjohnson/Desktop/nutrify-me/client-side/src/App.css'
 import {useHistory} from "react-router-dom"
 
 
-function Register() {
-    let history = useHistory()
+
+function Register(props) {
+   let history = useHistory()
     
     const [userRegister, setUserRegister] = useState({})
 
@@ -18,7 +19,7 @@ function Register() {
     }
     const handleUserRegister = () => {
         
-        fetch('http://localhost:8080/register', {
+        fetch('http://localhost:8080/users/register', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
@@ -28,12 +29,13 @@ function Register() {
         }).then(result => result.json())
         .then(result => {
             if(result.success) {
-                alert("Successfully added!")
-                history.push("/")
+                alert("Successfully Registered!")
+                props.history.push("/")
             }else {
-                alert("error")
+                alert("Error Try Again!")
             }
-        })
+        }) 
+        
     }
 
 
