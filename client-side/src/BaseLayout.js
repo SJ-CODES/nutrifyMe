@@ -1,5 +1,6 @@
 
 import { Component } from "react"
+import Checkdelete from "./components/checkdelete"
 import Footer from './components/Footer'
 
 function BaseLayout(props) {
@@ -8,6 +9,7 @@ function BaseLayout(props) {
              
              {props.children}
              {/* <Footer /> */}
+            
         </div>
     )
 }

@@ -1,9 +1,9 @@
 
-export const login = (data) => {
+export const login = (dataObject) => {
      
     return {
         type: "LOGIN",
-        payload: data
+        payload: dataObject
     }
 }
 

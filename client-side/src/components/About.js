@@ -8,14 +8,17 @@ function About () {
         <div id="About">
             
             <div id='headerDisplay'>
-                <h1>nutrifyMe</h1>
-                <a href="/register"><button class="btn"> Register</button></a>
-                
-                
-               
+                <h1 class='aboutNutrifyColor'>nutrifyMe</h1>
                 
             </div>
-            <h1>About</h1>
+            <div class="aboutContainer">
+                <h1>About </h1>
+                <p>
+                    Welcome! <b>nutrifyMe</b> was created with the purpose of helping people create food diarys, access healthy recipes and search nutrition information.
+                    All to help improve peoples nutritional awareness and help them meet their health goals! 
+                </p>
+                <a href="/register"><button class="btn"> Register Now</button></a>
+            </div>
         </div>
     )
 }

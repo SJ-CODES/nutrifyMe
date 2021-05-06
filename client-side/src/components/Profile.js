@@ -6,7 +6,7 @@ import { getUserDiaryEntry } from '../actions/action'
 import DisplayEntry from "./DisplayEntry"
 
 
-
+const timestamp = Date.now()
 function Profile(props) {
 
     const [userProfileEntry, setUserProfileEntry]= useState({user_id:props.user_id})
@@ -27,7 +27,7 @@ function Profile(props) {
             }
         ,
         body: JSON.stringify(userProfileEntry)
-        }).then(result => result.json())
+        }).then(response => response.json())
         .then(result => {
             if(result.success) {
                 alert("Entry Added!")
@@ -46,7 +46,7 @@ function Profile(props) {
 
     
      return(
-            <div>
+            <div id="profilePage">
                 <div id='headerDisplay'>
                     <h1 id='headerNutrifyMe'>nutrifyMe</h1>
                     <a href="/HealthyRecipes"><button class="btn">Healthy Recipes</button></a>
@@ -55,10 +55,10 @@ function Profile(props) {
                     
                 </div>
                 
-                <div id="profilePage">
+                <div>
                     <div class="inputEntry">
-                        <input type='text' onChange={HandleOnAdd} placeholder="Enter: Breakfast, Lunch, Dinner" name="meal" required/>
-                        <input type='text' onChange={HandleOnAdd} placeholder="Enter Meal Description" name="description" required />
+                        <input type='textbox' onChange={HandleOnAdd} placeholder="Enter: Breakfast, Lunch, Dinner" name="meal" required/>
+                        <input type='textbox' onChange={HandleOnAdd} placeholder="Enter Meal Description" name="description" required />
                         <button onClick={HandleUserProfileEntry}>Add</button>
                         
                     </div>

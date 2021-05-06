@@ -24,41 +24,59 @@ function DisplayEntry (props) {
             })
     }
 
-    // const deleteDiaryEntry = () => {
-    //     let diaryentry_id = userDiaryEntrys.diaryentry_id
-    //     console.log('diaryentry_id', diaryentry_id )
+    const deleteDiaryEntry = (diaryentry_id) => {
+        console.log(userDiaryEntrys)
+        //let diaryentryid = userDiaryEntrys[0].diaryentry_id
         
-    //     fetch('http://localhost:8080/users/login',{
-    //         method: 'POST',
-    //         headers: {
-    //             'Content-Type': 'application/json'
-    //         },
-    //         body: JSON.stringify(diaryentry_id)
-    //     }).then(result => result.json())
-    //     .then(result => {
-    //         if(result.success) {
-    //             alert("Entry Deleted!")
-    //         }else {
-    //             alert("Error Try Again!")
-    //         }
+        console.log('diaryentry_id', diaryentry_id )
         
-    // })
+        fetch(`http://localhost:8080/profiles/entry/${diaryentry_id}`,{
+            method: 'DELETE'
+        }).then(response => response.json())
+        .then(result => {
+            if(result.success) {
+
+                alert("Entry Deleted!")
+            }else {
+                alert("Error Try Again!")
+            }
+        
+    })
+}
+//     const updateDiaryEntry = (diaryentry_id) => {
+//         console.log(userDiaryEntrys)
+//         //let diaryentryid = userDiaryEntrys[0].diaryentry_id
+        
+//         console.log('diaryentry_id', diaryentry_id )
+        
+//         fetch(`http://localhost:8080/profile/entryupdate/${diaryentry_id}`,{
+//             method: 'POST',
+//             headers: {
+//                 'Content-Type': 'application/json'
+//             },
+//             body: JSON.stringify(diaryentry_id)
+//         }).then(result => result.json())
+//         .then(result => {
+//             if(result.success) {
+//                 alert("Entry Updated!")
+//             }else {
+//                 alert("Error Try Again!")
+//             }
+        
+//     })
+// }
     const entryItems = userDiaryEntrys.map((entrys) => {
         return (
             <div >
-                
-                <div>
-                    <li class="displayDiaryEntrys" key = {entrys.diaryentry_id}> 
+                <div key = {entrys.diaryentry_id}>
+                    <li class="displayDiaryEntrys" > 
                         
                         <label>{entrys.date_created}</label>
                         <label>{entrys.meal}</label>
                         <label>{entrys.description}</label>
+                       <button class="deleteBTN" onClick = {() => deleteDiaryEntry(entrys.diaryentry_id)} >Delete</button>
+                       {/* <button class="deleteBTN" onClick = {() => updateDiaryEntry(entrys.diaryentry_id)} >Delete</button> */}
                         
-                        <button class="deleteBTN">Delete</button>
-                       
-               
-                        {/* <button onClick = {() => deleteDiaryEntry(entrys.diaryentry_id)} >Delete</button>
-                        */}
                     </li>
                 </div>
                
