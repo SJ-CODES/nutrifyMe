@@ -12,7 +12,7 @@ router.post('/entry', (req,res) => {
     const user_id = req.body.user_id
 
     db.none('INSERT INTO diaryentrys(meal,description,user_id) VALUES($1,$2,$3)',[meal,description,user_id])
-    res.send('Entry Added')
+    res.send({success:true})
 })
 
 // Get all of a users diary entry
@@ -22,23 +22,24 @@ router.get('/entry/:user_id', (req,res) =>{
       db.any( 'SELECT * FROM diaryentrys WHERE user_id = $1', [user_id])
     
     .then((diaryentrys)=>{
+      console.log('diaryentrys',diaryentrys)
     res.json({success:true, diaryentrys})
     }).catch(error=> console.log(error)) 
     
     
 })
+
 //Delete a diary Entry
 router.delete('/entry/:diaryentry_id', (req, res) => {
   const diaryentry_id = req.params.diaryentry_id
   db.none("DELETE FROM diaryentrys WHERE diaryentry_id = $1", [diaryentry_id])
   .then(() =>{
-    res.json({success:true},'Entry was deleted')
+    res.json({success:true})
   })
 })
 
-
 // Update a Diary Entry
-// router.patch('/entry/:diaryentry_id', (req, res) => {
+// router.patch('/entryupdate/:diaryentry_id', (req, res) => {
 //   const meal = req.body.meal
 //   const description = req.body.description
 //   const diaryentry_id = req.params.diaryentry_id

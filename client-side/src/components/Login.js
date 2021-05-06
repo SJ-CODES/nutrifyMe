@@ -40,14 +40,14 @@ function Login(props) {
             body: JSON.stringify(data)
             }).then(response => response.json())
             .then(result => {
+                console.log('login',result)
                 if(result.user_id) {
                     data.user_id = result.user_id
-
                     // save the username and user_id in local storage 
                     localStorage.setItem("username", data.username)
                     localStorage.setItem("userId", data.user_id)
-                    
-                    props.onLogin(data)
+                    let dataObject = {"username":data.username, "user_id":data.user_id}
+                    props.onLogin(dataObject)
                     alert("Welcome back to nutrifyMe")
                     props.history.push(`/profile/${result.user_id}`)
                 }else {
@@ -91,7 +91,7 @@ function Login(props) {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        onLogin: (data) => dispatch(login(data))
+        onLogin: (dataObject) => dispatch(login(dataObject))
         
 
 

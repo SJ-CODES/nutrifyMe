@@ -11,7 +11,7 @@ app.use(express.json())
 app.use(cors())
 
 
-//Routes 
+// Routes 
 const UsersRouter = require('./routes/users')
 app.use('/users', UsersRouter)
 
