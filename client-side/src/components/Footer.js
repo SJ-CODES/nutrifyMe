@@ -7,7 +7,8 @@ import {useHistory} from "react-router-dom"
 function Footer () {
     return(
         <div>
-            <h1>Footer</h1>
+            <h1>Summer Johnson</h1>
+
         </div>
     )
 }

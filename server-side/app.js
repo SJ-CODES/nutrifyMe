@@ -15,6 +15,9 @@ app.use(cors())
 const UsersRouter = require('./routes/users')
 app.use('/users', UsersRouter)
 
+const ProfilesRouter = require('./routes/profiles')
+app.use('/profiles', ProfilesRouter)
+
 
 
 

@@ -4,13 +4,17 @@ import{useState} from 'react'
 import '/Users/summerjohnson/Desktop/nutrify-me/client-side/src/App.css'
 import {useHistory} from "react-router-dom"
 import { withRouter } from 'react-router-dom'
+import redux from 'react-redux'
+import {connect} from 'react-redux'
+import {login} from '../actions/action'
+
 
 
 function Login(props) {
     //let history = useHistory
   
     const [userLogin, setUserLogin] = useState({})
-    const [isloggedin, setIsloggedin] = useState(false)
+   
 
     const handleOnAdd = (e) =>{
         setUserLogin({
@@ -25,6 +29,7 @@ function Login(props) {
         let data = {
             username: userLogin.username,
             password: userLogin.password
+        
             
         }
         fetch('http://localhost:8080/users/login',{
@@ -33,21 +38,28 @@ function Login(props) {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(data)
-            }).then(result => result.json())
+            }).then(response => response.json())
             .then(result => {
-                if(result.success) {
-                    console.log(result)
-                    localStorage.setItem("userid", result.user_id)
+                if(result.user_id) {
+                    data.user_id = result.user_id
+
+                    // save the username and user_id in local storage 
+                    localStorage.setItem("username", data.username)
+                    localStorage.setItem("userId", data.user_id)
+                    
+                    props.onLogin(data)
                     alert("Welcome back to nutrifyMe")
-                   props.history.push("/Profile")
+                    props.history.push(`/profile/${result.user_id}`)
                 }else {
                     alert("No user found")
-                  props.history.push("/Regsiter")
+                  props.history.push("/register")
                 }
+                
         
         })
 
     }
+    
 
     const handleUserGuests = () => {
        props.history.push("/Home")
@@ -55,21 +67,21 @@ function Login(props) {
 
     return (
         <div id='loginPage' >
-            <h1 id='title'>nutrifyMe</h1>
+            <h1 class='title'>nutrifyMe</h1>
             
-            <div id='loginBox'>
+            <div class='loginBox'>
                 <h1>Login</h1>
                 <div class="textbox">
-                    <i class="fas fa-user" ></i>   
-                    <input  type="text" onChange={handleOnAdd} placeholder="username" name='username' required/>
+                    {/* <i class="fas fa-user" ></i>    */}
+                    <input  type="text" onChange={handleOnAdd} placeholder="Username" name='username' required/>
                 </div>
                 <div class="textbox">
-                    <i class="fas fa-lock" ></i>
-                    <input  type="password" onChange={handleOnAdd} placeholder="password" name='password'required/>
+                    {/* <i class="fas fa-lock" ></i> */}
+                    <input  type="password" onChange={handleOnAdd} placeholder="Password" name='password'required/>
                 </div>
                 <button class="btn" onClick={handleUserLogin}>Login</button>
                 <a href="/register"><button class="btn"> Register</button></a> 
-                <a href="/Home"><button class="btn" onClick={handleUserGuests}>Login as Guest </button></a> 
+                <a href="/about"><button class="btn" onClick={handleUserGuests}>Login as Guest </button></a> 
                   
             </div>
         </div>
@@ -77,4 +89,14 @@ function Login(props) {
     )
 }
 
-export default withRouter(Login) 
+const mapDispatchToProps = (dispatch) => {
+    return {
+        onLogin: (data) => dispatch(login(data))
+        
+
+
+    }
+
+}
+
+export default connect(null, mapDispatchToProps)(withRouter(Login))

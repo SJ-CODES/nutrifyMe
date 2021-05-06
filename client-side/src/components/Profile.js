@@ -1,21 +1,26 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import {useState} from 'react'
 import '/Users/summerjohnson/Desktop/nutrify-me/client-side/src/App.css'
+import {connect} from 'react-redux'
+import { getUserDiaryEntry } from '../actions/action'
+import DisplayEntry from "./DisplayEntry"
 
 
 
-function Profile() {
+function Profile(props) {
 
-    const [userProfileEntry, setUserProfileEntry]    = useState({})
+    const [userProfileEntry, setUserProfileEntry]= useState({user_id:props.user_id})
+    console.log(userProfileEntry)
 
-    const handleOnAdd = (e) => {
+    const HandleOnAdd = (e) => {
         setUserProfileEntry({
             ...userProfileEntry,
             [e.target.name]: e.target.value
         })
+        
     }
-    const handleUserProfileEntry = () => {
-        fetch('http://localhost:8080/users/entry', {
+    const HandleUserProfileEntry = () => {
+        fetch(`http://localhost:8080/profiles/entry`, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json'
@@ -29,26 +34,52 @@ function Profile() {
             }else {
                 alert("Error Try Again!")
             }
-        }) 
-    }
-    return(
-        <div>
-             <div id='headerDisplay'>
-                <h1>nutrifyMe</h1>
-                <h3>My Profile</h3>
-                <h3>Healthy Recipes</h3>
-                <h3>Nutrition Help</h3>
-                
-            </div>
+        
+        })
+     }
+    
+  
             
-            <div id="profilePage">
-                <div id="inputEntry">
-                    <input type='text' onChange={handleOnAdd} placeholder="Enter Meal:Breakfast, Lunch, Dinner" name="meal" required/>
-                    <input type='text' onChange={handleOnAdd} placeholder="Enter Meal Description" name="description" required />
-                    <button onClick={handleUserProfileEntry}>Submit</button>
+
+    
+    
+
+    
+     return(
+            <div>
+                <div id='headerDisplay'>
+                    <h1 id='headerNutrifyMe'>nutrifyMe</h1>
+                    <a href="/HealthyRecipes"><button class="btn">Healthy Recipes</button></a>
+                    <a href="/NutritionHelp"><button class="btn"> Nutrition Help</button></a>
+                    <a href="/login"><button class="btn"> Log out</button></a>
+                    
                 </div>
+                
+                <div id="profilePage">
+                    <div class="inputEntry">
+                        <input type='text' onChange={HandleOnAdd} placeholder="Enter: Breakfast, Lunch, Dinner" name="meal" required/>
+                        <input type='text' onChange={HandleOnAdd} placeholder="Enter Meal Description" name="description" required />
+                        <button onClick={HandleUserProfileEntry}>Add</button>
+                        
+                    </div>
+                </div>
+               
+                <h2 class="foodDiaryTitle">Food Diary</h2>
+                    <DisplayEntry /> 
+                
+
             </div>
-        </div>
-    )
+        )
+        
+  
+    
 }
-export default Profile
+    const mapStateToProps = (state) => {
+        return {
+            user_id: state.users.user_id
+        }
+
+}
+
+export default connect(mapStateToProps)(Profile)
+    

@@ -41,19 +41,19 @@ function Register(props) {
 
     return(
         <div id="registerPage">
-            <h1 id='title'>nutrifyMe</h1>
+            <h1 class='title'>nutrifyMe</h1>
            
            
            
-            <div id='loginBox'>
+            <div class='loginBox'>
             
                 <h1>Register</h1>
                 <div class="textbox">
-                    <i class="fas fa-user" aria-hidden="true"></i>   
+                    {/* <i class="fas fa-user" aria-hidden="true"></i>    */}
                     <input  type="text" onChange={handleOnAdd} placeholder="Username" name='username' required/>
                 </div>
                 <div class="textbox">
-                    <i class="fas fa-lock" aria-hidden="true"></i>
+                    {/* <i class="fas fa-lock" aria-hidden="true"></i> */}
                     <input  type="password" onChange={handleOnAdd} placeholder="Password" name='password'  required/>
                 </div>
                 <button class="btn" onClick={handleUserRegister}>Register</button>
