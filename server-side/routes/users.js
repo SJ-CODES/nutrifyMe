@@ -1,9 +1,9 @@
 const express = require('express');
 const router = express.Router();
-const pgp = require('pg-promise')();
-var bcrypt = require('bcryptjs');
-const connectionString = "postgres://localhost:5432/nutrifyme"
+const pgp =require('pg-promise')()
+const connectionString="postgres://localhost:5432/nutrifyme"
 const db = pgp(connectionString)
+var bcrypt = require('bcryptjs')
 
 
 
@@ -38,10 +38,10 @@ router.post('/login', async (req, res) => {
 
     if(!!isvalid){
         
-        const {user_id,username,password,isloggedin} = user
+        const {user_id,username,password} = user
         console.log("user id", user_id)
         console.log("username",username)
-        res.json({success:true, user_id:user_id})
+        res.json({ user_id:user_id})
         //return  {user_id,username,password,isloggedin}
         
     } else (
@@ -49,27 +49,10 @@ router.post('/login', async (req, res) => {
     )
     
 })
+// router.get('/logout', (res,req) =>{
+  
+// })
 
-// User Diary Entry
-router.post('/entry', (req,res) => {
-    const meal = req.body.meal
-    const description = req.body.description
-    const user_id = 4
-
-    db.none('INSERT INTO diaryentrys(meal,description,user_id) VALUES($1,$2,$3)',[meal,description,4])
-    res.send('Entry Added')
-})
-
-// Get all of a users diary entry
-router.get('/profile/:user_id', (req,res) =>{
-    const user_id = req.params.user_id
-
-    const diary = db.one( `SELECT * FROM diaryentrys WHERE user_id = $1`, [user_id])
-    .then(()=>{
-        res.json({success:true})
-    }).catch(error=> console.log(error))
-    
-})
 
 
 module.exports = router

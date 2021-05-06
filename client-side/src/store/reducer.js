@@ -1,9 +1,18 @@
 const initialState = {
-    isloggedin: false
+    users: {}
+    
 }
 
 const reducer = (state = initialState, action) => {
-    return state
+
+    if(action.type == 'LOGIN') {
+        return {
+            ...state,
+            users: action.payload
+        }
+    }else{
+        return state
+    }
 }
 
 export default reducer
