@@ -13,7 +13,7 @@ function DisplayEntry (props) {
 
     useEffect(() => {
         getUserDiaryEntry()
-    }, [])
+    }, [userDiaryEntrys])
     const getUserDiaryEntry = () => {
         fetch(`http://localhost:8080/profiles/entry/${props.user_id}`)
             .then(response => response.json())
