@@ -13,9 +13,9 @@ function DisplayEntry (props) {
 
     useEffect(() => {
         getUserDiaryEntry()
-    }, [userDiaryEntrys])
+    }, [])
     const getUserDiaryEntry = () => {
-        fetch(`http://localhost:8080/profiles/entry/${props.user_id}`)
+        fetch(`SERVER_URL/profiles/entry/${props.user_id}`)
             .then(response => response.json())
             .then(result => {
                 console.log("result",result)
@@ -30,12 +30,12 @@ function DisplayEntry (props) {
         
         console.log('diaryentry_id', diaryentry_id )
         
-        fetch(`http://localhost:8080/profiles/entry/${diaryentry_id}`,{
+        fetch(`${process.env.REACT_APP_SERVER_URL}/profiles/entry/${diaryentry_id}`,{
             method: 'DELETE'
         }).then(response => response.json())
         .then(result => {
             if(result.success) {
-
+                getUserDiaryEntry()
                 alert("Entry Deleted!")
             }else {
                 alert("Error Try Again!")

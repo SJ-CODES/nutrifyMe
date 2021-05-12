@@ -19,7 +19,7 @@ function Register(props) {
     }
     const handleUserRegister = () => {
         
-        fetch('http://localhost:8080/users/register', {
+        fetch(`${process.env.REACT_APP_SERVER_URL}/users/register`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'

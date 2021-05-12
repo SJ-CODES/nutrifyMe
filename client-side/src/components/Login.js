@@ -12,7 +12,7 @@ import {login} from '../actions/action'
 
 function Login(props) {
     //let history = useHistory
-  
+    console.log(process.env.REACT_APP_SERVER_URL)
     const [userLogin, setUserLogin] = useState({})
    
 
@@ -32,10 +32,11 @@ function Login(props) {
         
             
         }
-        fetch('http://localhost:8080/users/login',{
+        fetch(`${process.env.REACT_APP_SERVER_URL}/users/login`,{
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*'
             },
             body: JSON.stringify(data)
             }).then(response => response.json())

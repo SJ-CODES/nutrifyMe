@@ -20,7 +20,7 @@ function Profile(props) {
         
     }
     const HandleUserProfileEntry = () => {
-        fetch(`http://localhost:8080/profiles/entry`, {
+        fetch(`${process.env.REACT_APP_SERVER_URL}/profiles/entry`, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json'
