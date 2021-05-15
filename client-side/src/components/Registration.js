@@ -20,11 +20,7 @@ function Register(props) {
     const handleUserRegister = () => {
         
         fetch(`${process.env.REACT_APP_SERVER_URL}/users/register`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          }
-        ,
+        method: 'POST',
         body: JSON.stringify(userRegister)
         }).then(result => result.json())
         .then(result => {

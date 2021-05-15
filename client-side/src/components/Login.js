@@ -7,12 +7,13 @@ import { withRouter } from 'react-router-dom'
 import redux from 'react-redux'
 import {connect} from 'react-redux'
 import {login} from '../actions/action'
+import axios from 'axios'
 
 
 
 function Login(props) {
     //let history = useHistory
-    console.log(process.env.REACT_APP_SERVER_URL)
+   // console.log(process.env.REACT_APP_SERVER_URL)
     const [userLogin, setUserLogin] = useState({})
    
 
@@ -25,39 +26,51 @@ function Login(props) {
 
     
 
-    const handleUserLogin = () => {
+    const handleUserLogin = async () => {
         let data = {
             username: userLogin.username,
             password: userLogin.password
         
             
         }
-        fetch(`${process.env.REACT_APP_SERVER_URL}/users/login`,{
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Access-Control-Allow-Origin': '*'
-            },
-            body: JSON.stringify(data)
-            }).then(response => response.json())
-            .then(result => {
-                console.log('login',result)
-                if(result.user_id) {
-                    data.user_id = result.user_id
-                    // save the username and user_id in local storage 
-                    localStorage.setItem("username", data.username)
-                    localStorage.setItem("userId", data.user_id)
-                    let dataObject = {"username":data.username, "user_id":data.user_id}
-                    props.onLogin(dataObject)
-                    alert("Welcome back to nutrifyMe")
-                    props.history.push(`/profile/${result.user_id}`)
-                }else {
-                    alert("No user found")
-                  props.history.push("/register")
-                }
+        // console.log(process.env.REACT_APP_SERVER_URL)
+        // fetch(`${process.env.REACT_APP_SERVER_URL}/users/login`,{
+        //     method: 'POST',
+            
+        //     body: JSON.stringify(data)
+        //     }).then(response => response.json())
+        //     .then(result => {
+        //         console.log('login',result)
+        //         if(result.user_id) {
+        //             data.user_id = result.user_id
+        //             // save the username and user_id in local storage 
+        //             localStorage.setItem("username", data.username)
+        //             localStorage.setItem("userId", data.user_id)
+        //             let dataObject = {"username":data.username, "user_id":data.user_id}
+        //             props.onLogin(dataObject)
+        //             alert("Welcome back to nutrifyMe")
+        //             props.history.push(`/profile/${result.user_id}`)
+        //         }else {
+        //             alert("No user found")
+        //           props.history.push("/register")
+        //         }
                 
         
-        })
+        // }).catch(error=>{
+        //     console.log(error)
+
+        // })
+        try{
+            let response = await axios.post(`${process.env.REACT_APP_SERVER_URL}/users/register`, data)
+            //let test = await axios.get(`${process.env.REACT_APP_SERVER_URL}`)
+            console.log("Response: ", response)
+
+
+        }catch(err){
+            console.log("Error :", err)
+        }
+        
+          
 
     }
     
